@@ -4,6 +4,10 @@
   text-align: center;
 }
 
+.App__Body {
+  padding-top: 64px;
+}
+
 .App-logo {
   height: 40vmin;
 }
