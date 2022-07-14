@@ -1,9 +1,9 @@
-@import '../../../_settngs/variables.css';
+@import '../../../_settings/variables.css';
 
 .VisualizerControls {
   display: inline-flex;
   align-items: center;
-  padding: 8px 0;
+  padding: 1rem 0;
 }
 
 .VisualizerControls__CenterButton {
