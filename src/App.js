@@ -12,6 +12,25 @@ class App extends Component {
     algorithm: null
   };
 
+  _addToTrace = (
+    trace,
+    i,
+    j,
+    array,
+    comparingIndices = [],
+    comparedIndices = [],
+    sortedIndices = []
+  ) => {
+    trace.push({
+      i,
+      j,
+      array: [...array],
+      comparingIndices: [...comparingIndices],
+      comparedIndices: [...comparedIndices],
+      sortedIndices: [...sortedIndices]
+    });
+  };
+
   bubbleSort = (nums) => {
     // Set up code for tracing the algorithm
     const addToTrace = (
@@ -86,8 +105,462 @@ class App extends Component {
     return trace;
   };
 
+  selectionSort = (nums) => {
+    // Initial State
+    const trace = [
+      {
+        i: 0,
+        j: 0,
+        array: [...nums],
+        comparingIndices: [],
+        comparedIndices: [],
+        sortedIndices: []
+      }
+    ];
+
+    // Core Algorithm
+    for (let i = 0; i < nums.length - 1; i++) {
+      // Internal Loop: Find index of min value
+      let minIndex = i;
+      for (let j = i + 1; j < nums.length; j++) {
+        this._addToTrace(
+          trace,
+          i,
+          j,
+          nums,
+          [minIndex, j],
+          [],
+          [...trace[trace.length - 1].sortedIndices]
+        );
+        if (nums[j] < nums[minIndex]) {
+          this._addToTrace(
+            trace,
+            i,
+            j,
+            nums,
+            [minIndex, j],
+            [minIndex, j],
+            [...trace[trace.length - 1].sortedIndices]
+          );
+          minIndex = j;
+          this._addToTrace(
+            trace,
+            i,
+            j,
+            nums,
+            [minIndex, j],
+            [],
+            [...trace[trace.length - 1].sortedIndices]
+          );
+        }
+      }
+
+      // Swap min value with current value
+      this._addToTrace(
+        trace,
+        i,
+        nums.length - 1 - i,
+        nums,
+        [minIndex],
+        [i],
+        [...trace[trace.length - 1].sortedIndices]
+      );
+      let temp = nums[i];
+      nums[i] = nums[minIndex];
+      nums[minIndex] = temp;
+      this._addToTrace(
+        trace,
+        i,
+        nums.length - 1 - i,
+        nums,
+        [],
+        [minIndex],
+        [...trace[trace.length - 1].sortedIndices, i]
+      );
+    }
+
+    // Final item in the array is sorted
+    this._addToTrace(
+      trace,
+      nums.length - 1,
+      nums.length - 1,
+      nums,
+      [],
+      [],
+      [...trace[trace.length - 1].sortedIndices, nums.length - 1]
+    );
+
+    return trace;
+  };
+
+  insertionSort = (nums) => {
+    // Initial State
+    const trace = [
+      {
+        i: 0,
+        j: 0,
+        array: [...nums],
+        comparingIndices: [],
+        comparedIndices: [],
+        sortedIndices: []
+      }
+    ];
+
+    // Core Algorithm
+    for (let i = 1; i < nums.length; i++) {
+      let value = nums[i];
+      let hole = i;
+      this._addToTrace(
+        trace,
+        i,
+        null,
+        nums,
+        [i],
+        [],
+        [...trace[trace.length - 1].sortedIndices]
+      );
+      this._addToTrace(
+        trace,
+        i,
+        null,
+        nums,
+        [i],
+        [i],
+        [...trace[trace.length - 1].sortedIndices]
+      );
+      while (hole > 0 && nums[hole - 1] > value) {
+        this._addToTrace(
+          trace,
+          i,
+          null,
+          nums,
+          [hole - 1],
+          [hole],
+          [...trace[trace.length - 1].sortedIndices]
+        );
+        nums[hole] = nums[hole - 1];
+        hole -= 1;
+        this._addToTrace(
+          trace,
+          i,
+          null,
+          nums,
+          [hole],
+          [hole + 1],
+          [...trace[trace.length - 1].sortedIndices]
+        );
+      }
+      this._addToTrace(
+        trace,
+        i,
+        null,
+        nums,
+        [],
+        [hole],
+        [...trace[trace.length - 1].sortedIndices]
+      );
+      nums[hole] = value;
+      this._addToTrace(
+        trace,
+        i,
+        null,
+        nums,
+        [],
+        [hole],
+        [...trace[trace.length - 1].sortedIndices, i - 1]
+      );
+    }
+    this._addToTrace(
+      trace,
+      nums.length - 1,
+      null,
+      nums,
+      [],
+      [],
+      [...trace[trace.length - 1].sortedIndices, nums.length - 1]
+    );
+    return trace;
+  };
+
+  mergeSort = (nums) => {
+    const addToTrace = (
+      trace,
+      i,
+      j,
+      array,
+      comparingIndices = [],
+      comparedIndices = [],
+      sortedIndices = []
+    ) => {
+      trace.push({
+        i,
+        j,
+        array: [...array],
+        comparingIndices: [...comparingIndices],
+        comparedIndices: [...comparedIndices],
+        sortedIndices: [...sortedIndices]
+      });
+    };
+    // Initial State
+    const trace = [
+      {
+        i: 0,
+        j: 0,
+        array: [...nums],
+        comparingIndices: [],
+        comparedIndices: [],
+        sortedIndices: []
+      }
+    ];
+
+    function merge(original, start, mid, end) {
+      const left = original.slice(start, mid);
+      const right = original.slice(mid, end);
+      let i = 0;
+      let j = 0;
+      let k = 0;
+      while (i < left.length && j < right.length) {
+        if (left[i] <= right[j]) {
+          addToTrace(trace, 0, 0, original, [], [k + start], []);
+          original[k + start] = left[i];
+          i++;
+        } else {
+          addToTrace(trace, 0, 0, original, [], [k + start], []);
+          original[k + start] = right[j];
+          j++;
+        }
+        k++;
+      }
+      while (i < left.length) {
+        addToTrace(trace, 0, 0, original, [], [k + start], []);
+        original[k + start] = left[i];
+        i++;
+        k++;
+      }
+      while (j < right.length) {
+        addToTrace(trace, 0, 0, original, [], [k + start], []);
+        original[k + start] = right[j];
+        j++;
+        k++;
+      }
+
+      left.length = 0;
+      right.length = 0;
+    }
+
+    function recursiveMergeSort(original, start, end) {
+      const length = end - start;
+      if (length < 2) {
+        if (length < 1) return original;
+        else return [original[start]];
+      }
+
+      const midPoint = Math.floor((start + end) / 2);
+      addToTrace(
+        trace,
+        0,
+        0,
+        original,
+        [...Array(midPoint - start).keys()].map((i) => i + start),
+        [],
+        [...trace[trace.length - 1].sortedIndices]
+      );
+      recursiveMergeSort(original, start, midPoint);
+
+      addToTrace(
+        trace,
+        0,
+        0,
+        original,
+        [...Array(end - midPoint).keys()].map((i) => i + midPoint),
+        [],
+        [...trace[trace.length - 1].sortedIndices]
+      );
+      recursiveMergeSort(original, midPoint, end);
+
+      merge(original, start, midPoint, end);
+    }
+
+    recursiveMergeSort(nums, 0, nums.length);
+
+    addToTrace(
+      trace,
+      0,
+      0,
+      nums,
+      [],
+      [],
+      [...Array(nums.length).keys()]
+    );
+    return trace;
+  };
+
+  quickSort = (nums) => {
+    const addToTrace = (
+      trace,
+      i,
+      j,
+      array,
+      comparingIndices = [],
+      comparedIndices = [],
+      sortedIndices = []
+    ) => {
+      trace.push({
+        i,
+        j,
+        array: [...array],
+        comparingIndices: [...comparingIndices],
+        comparedIndices: [...comparedIndices],
+        sortedIndices: [...sortedIndices]
+      });
+    };
+    // Initial State
+    const trace = [
+      {
+        i: 0,
+        j: 0,
+        array: [...nums],
+        comparingIndices: [],
+        comparedIndices: [],
+        sortedIndices: []
+      }
+    ];
+
+    function swap(array, a, b) {
+      let temp = array[a];
+      array[a] = array[b];
+      array[b] = temp;
+    }
+
+    function choosePivot(array, start, end) {
+      // randomly pick an element between start and end;
+      return Math.floor(Math.random() * (end - start)) + start;
+    }
+
+    function partition(array, start, end) {
+      let i = start + 1;
+      let j = start + 1;
+      addToTrace(
+        trace,
+        0,
+        0,
+        array,
+        [start],
+        [],
+        [...trace[trace.length - 1].sortedIndices]
+      );
+      while (j <= end) {
+        if (array[j] < array[start]) {
+          addToTrace(
+            trace,
+            0,
+            0,
+            array,
+            [start],
+            [j],
+            [...trace[trace.length - 1].sortedIndices]
+          );
+          swap(array, i, j);
+          addToTrace(
+            trace,
+            0,
+            0,
+            array,
+            [start],
+            [i],
+            [...trace[trace.length - 1].sortedIndices]
+          );
+          i += 1;
+        }
+        j += 1;
+      }
+      swap(array, start, i - 1);
+      addToTrace(
+        trace,
+        0,
+        0,
+        array,
+        [i - 1],
+        [],
+        [...trace[trace.length - 1].sortedIndices]
+      );
+      return i - 1;
+    }
+
+    function recursiveQuickSort(array, start, end) {
+      if (start >= end) {
+        if (start === end) {
+          addToTrace(
+            trace,
+            0,
+            0,
+            array,
+            [],
+            [],
+            [...trace[trace.length - 1].sortedIndices, start]
+          );
+        }
+        return null;
+      }
+      let pivot = choosePivot(array, start, end);
+      addToTrace(
+        trace,
+        0,
+        0,
+        array,
+        [pivot],
+        [],
+        [...trace[trace.length - 1].sortedIndices]
+      );
+      swap(array, start, pivot);
+      addToTrace(
+        trace,
+        0,
+        0,
+        array,
+        [pivot],
+        [],
+        [...trace[trace.length - 1].sortedIndices]
+      );
+      pivot = partition(array, start, end);
+      addToTrace(
+        trace,
+        0,
+        0,
+        array,
+        [],
+        [],
+        [...trace[trace.length - 1].sortedIndices, pivot]
+      );
+      recursiveQuickSort(array, start, pivot - 1);
+      recursiveQuickSort(array, pivot + 1, end);
+    }
+
+    recursiveQuickSort(nums, 0, nums.length - 1);
+
+    addToTrace(
+      trace,
+      0,
+      0,
+      nums,
+      [],
+      [],
+      [...Array(nums.length).keys()]
+    );
+
+    return trace;
+  };
+
+  ALGORITHM = {
+    'Bubble Sort': this.bubbleSort,
+    'Selection Sort': this.selectionSort,
+    'Insertion Sort': this.insertionSort,
+    'Merge Sort': this.mergeSort,
+    'Quick Sort': this.quickSort
+  };
+
   componentDidMount() {
-    this.generateRandomArray(this.state.arraySize);
+    this.generateRandomArray();
   }
 
   generateRandomArray = () => {
@@ -111,7 +584,7 @@ class App extends Component {
   };
 
   handleAlgorithmChange = (algorithm) => {
-    this.setState({ algorithm });
+    this.setState({ algorithm }, this.generateRandomArray);
   };
 
   handleArraySizeChange = (size) => {
@@ -123,8 +596,11 @@ class App extends Component {
 
   createTrace = () => {
     const numbers = [...this.state.array];
-    const trace = this.bubbleSort(numbers);
-    this.setState({ trace });
+    const sort = this.ALGORITHM[this.state.algorithm];
+    if (sort) {
+      const trace = sort(numbers);
+      this.setState({ trace });
+    }
   };
 
   render() {
