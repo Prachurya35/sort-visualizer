@@ -23,7 +23,7 @@ const TopBar = ({
         </section>
         <section className="TopBar__Section TopBar__Section_align_end">
           <Menu
-            placeholder="Sort Algorithm"
+            placeholder="Select Algorithm"
             items={[
               'Bubble Sort',
               'Selection Sort',

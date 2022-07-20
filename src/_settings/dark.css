@@ -23,7 +23,10 @@
     --yellow: #fff59d;
     --yellow-light: #ffffcf;
     --yellow-dark: #cbc26d;
-  
+    /*Neon lights*/
+    --purple-neon: rgb(245, 21, 242);
+    --green-neon: rgb(68,214,44);
+    --blue-neon:  #66FCF1;
     /* MD Amber 200 */
     --amber: #ffe082;
     --amber-light: #ffffb3;
@@ -42,13 +45,13 @@
     --gray-850: rgb(229, 229, 234);
     --gray-900: rgb(242, 242, 247);
   
-    --text-color: var(--gray-800);
+    --text-color: var(--blue-neon);
     --text-color-dark: var(--gray-200);
-    --button-disabled-ink-color: rgba(255, 255, 255, 0.37);
+    --button-disabled-ink-color: var(--blue-neon);
   
     --background-color-1: var(--gray-50);
-    --background-color-2: var(--gray-100);
-    --background-color-2: var(--gray-200);
+    --background-color-2: var(--gray-50);
+    --background-color-3: var(--gray-300);
     --background-color-4: var(--gray-300);
   
     --elevation-baseline-color: black;

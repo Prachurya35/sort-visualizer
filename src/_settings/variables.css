@@ -1,8 +1,9 @@
 .App {
   /* MD Green 400 */
   --primary: #66bb6a;
-  --primary-light: #98ee99;
+  --primary-light: white;
   --primary-dark: #338a3e;
+  --primary-neon: #39ff14;
 
   /* MD Pink 300 */
   --secondary: #f06292;
@@ -42,14 +43,14 @@
   --gray-850: rgb(44, 44, 46);
   --gray-900: rgb(28, 28, 30);
 
-  --text-color: var(--gray-800);
-  --text-color-dark: var(--gray-800);
+  --text-color: Var(--blue-dark);
+  --text-color-dark: var(--blue-dark);
   --button-disabled-ink-color: rgba(0, 0, 0, 0.37);
 
   --background-color-1: white;
-  --background-color-2: white;
-  --background-color-2: white;
-  --background-color-4: white;
+  --background-color-2:white;
+  --background-color-3:var(--gray-100);
+  --background-color-4: white  ;
 
   --elevation-baseline-color: black;
   --elevation-umbra-opacity: 0.2;
