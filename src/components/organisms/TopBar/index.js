@@ -19,7 +19,7 @@ const TopBar = ({
       <div className="TopBar__Row">
         <section className="TopBar__Section">
           {/* <button>Menu</button> */}
-          <span className="TopBar__Title">Sorting Visualizer</span>
+          <span className="TopBar__Title">Sorting Algorithms Visualizer</span>
         </section>
         <section className="TopBar__Section TopBar__Section_align_end">
           <Menu
