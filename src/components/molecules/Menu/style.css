@@ -2,7 +2,6 @@
 .Menu {
   position: relative;
   display: inline-block;
-  
 }
 
 /* ELEMENT */
@@ -22,6 +21,7 @@
   text-align: justify;
   list-style: none;
   background-color: var(--background-color-2);
+  overflow: scroll;
 }
 
 .Menu__Header {
@@ -31,7 +31,6 @@
   justify-content: space-between;
   height: 2.5rem;
   padding: 0.5rem 0rem;
-  font-weight: bold;
 }
 
 .Menu__SelectedItem {
@@ -40,7 +39,7 @@
 }
 
 .Menu__Placeholder {
-  color: var(--gray-800);
+  color: var(--gray-500);
 }
 
 .Menu__Item {
