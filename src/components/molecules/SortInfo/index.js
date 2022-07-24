@@ -21,14 +21,14 @@ const SortInfo = ({
             description
           ) : (
             <p>
-              You must select an algorithm before you can visualize it's
-              execution on an array of numbers.
+              Please select an algorithm so as to visualize it's
+              execution, on an array of numbers.
             </p>
           )}
         </article>
 
         <aside className="SortInfo__Aside">
-          <h3>Performance</h3>
+          <h3>Time and Space Complexities</h3>
           <table>
             <tbody>
               <tr>
